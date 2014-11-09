@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>WTFSIGTE</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -29,17 +29,12 @@
 
     <div class="container">
 
-      <div class="row">
-        <div class="col-lg-3">
-          hi.
+      <div class="jumbotron">
+        <div class="container">
+          <h1>Getting your location...</h1>
+          <p>Please wait</p>
         </div>
-        <div class="col-lg-6">
-          hi.
-        </div>
-        <div class="col-lg-3">
-          hi.
-        </div>
-      </div><!-- /.row -->
+      </div>
 
     </div><!-- /.container -->
 
