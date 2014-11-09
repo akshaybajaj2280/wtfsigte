@@ -32,7 +32,7 @@
       <div class="jumbotron">
         <div class="container">
           <h1>Getting your location...</h1>
-          <p>Please wait</p>
+          <div id="location">Please wait...</div>
         </div>
       </div>
 
