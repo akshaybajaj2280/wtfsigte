@@ -8,7 +8,6 @@ if (navigator.geolocation)
     // argument - our configuration options - are optional.
     navigator.geolocation.getCurrentPosition
     (
-        console.log("Attempting to get user's location from browser ");
         function( position )
         {
             // alert( 'lat: ' + position.coords.latitude + ' long:' + position.coords.longitude );
