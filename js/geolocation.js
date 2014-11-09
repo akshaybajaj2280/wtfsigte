@@ -15,7 +15,7 @@ if (navigator.geolocation)
             console.log("Getting location at: " + google_url);
             $.getJSON(google_url,
                 function(data) {
-                    user_location = data.results[1]['formatted_address']
+                    user_location = data.results[1]['formatted_address'];
                     console.log("Location determined: " + user_location);
                     var location_div=document.getElementById('location');
                     location_div.innerHTML="<h3>Looks like you're in " + user_location + "</h3>";
