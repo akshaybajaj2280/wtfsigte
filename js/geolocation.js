@@ -20,7 +20,7 @@ if (navigator.geolocation)
                     var location_div=document.getElementById('location');
                     location_div.innerHTML="<h3>Looks like you're in " + user_location + "</h3>";
 
-                    var url = "http://wtfsigte.herokuapp.com/main.html" + "?" + position.coords.latitude + "?" + position.coords.longitude;
+                    var url = "main.html" + "?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude;
                     window.location.href = url;
                 }
             );
