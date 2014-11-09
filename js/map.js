@@ -4,8 +4,8 @@ var map;
 
 function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer();
-    var latitude = parseInt(getParam("lat"));
-    var longitude = parseInt(getParam("lon"));
+    var latitude = parseFloat(getParam("lat"));
+    var longitude = parseFloat(getParam("lon"));
     var myLatlng = new google.maps.LatLng(latitude,longitude);
     var dest = "Black Dog Smoke & Ale House, North Broadway Avenue, Urbana, IL"; //TODO
     calcRoute(myLatlng, dest);
