@@ -28,7 +28,7 @@
   <body>
 
     <div class="container">
-
+      <br/><br/>
       <div class="jumbotron">
         <div class="container">
           <h1>Getting your location...</h1>
