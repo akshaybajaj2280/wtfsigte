@@ -13,10 +13,21 @@
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
+    <style>
+      html{
+        height:100%;
+      }
+      body{
+        height: 100%;
+        font-family: Impact, Charcoal, sans-serif;
+      }
+    </style>
+
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoFE_bD3BCvI_GGSkryOgEfgppsSn27fo&sensor=false">
+    </script>
+    <script src="js/map.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -26,33 +37,35 @@
   </head>
 
   <body>
-
-    <div class="container">
+    <div class="container" style="width: 100%; height: 100%;">
         <br/></br/>
+        
 
-      <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-3" style="text-align:center;">
           <div class="panel panel-default">
             <div class="panel-body">
               <h3>MAYBE</h3>
             </div>
           </div>
         </div>
-        <div class="col-lg-6">
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <h3>WHY DON'T YOU FORKING GO TO...</h3>
+        <div class="col-lg-6" style="text-align:center; width: 50%; height: 650px;">
+          <div class="panel panel-default" style="width: 100%; height: 100%;">
+            <div class="panel-body" style="width: 100%; height: 100%;">
+              <h1>WHY DON'T YOU FORKING GO TO...</h1>
+              <br/>
+              <div id="map-canvas" style="width: 100%; height: 300px"></div>
+              <br/>
+              <p>hihihihi</p>
             </div>
           </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-3" style="text-align:center;">
           <div class="panel panel-default">
             <div class="panel-body">
               <h3>BLOCK</h3>
             </div>
           </div>
         </div>
-      </div><!-- /.row -->
 
     </div><!-- /.container -->
 
