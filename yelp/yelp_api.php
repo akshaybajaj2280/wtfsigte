@@ -141,6 +141,6 @@ function query_api($term, $location) {
 
 // THIS IS HOW YOU USE THE YELP API
 // query_api("TERM (food)", "LOCATION (Urbana, IL 61801)");
-query_api($_POST['term'], $_POST['location']);
+query_api("food", $_POST['location']);
 
 ?>
