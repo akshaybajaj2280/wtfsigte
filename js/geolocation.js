@@ -10,9 +10,8 @@ if (navigator.geolocation)
     (
         function( position )
         {
-
             // alert( 'lat: ' + position.coords.latitude + ' long:' + position.coords.longitude );
-            var google_url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + position.coords.latitude + ',' + position.coords.longitude;
+            var google_url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + position.coords.latitude + ',' + position.coords.longitude + "&key=AIzaSyAoFE_bD3BCvI_GGSkryOgEfgppsSn27fo";
             console.log("Getting location at: " + google_url);
             $.getJSON(google_url,
                 function(data) {
@@ -27,7 +26,7 @@ if (navigator.geolocation)
         },
         function( error ){
             //console.log("User refused to share location or there was an error: ", error);
-            
+
             $("#auto").css("display","none");
             $("#manual").css("display", "block");
             google.maps.event.addListener(autocomplete, 'place_changed', function() {
@@ -47,7 +46,7 @@ if (navigator.geolocation)
                         window.location.href = url;
                     }
                 );
-     
+
                     //alert($("#searchTextField").val());
                 });
 
