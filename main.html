@@ -30,6 +30,10 @@
       .badge-remove {
         float: right;
       }
+      #legend {
+        background: white;
+        padding: 10px;
+      }
     </style>
 
     <script type="text/javascript"
@@ -46,16 +50,16 @@
 
   <body>
     <div class="container" style="width: 100%; height: 100%;">
-        <br/></br/>
+        <br/>
         
 
-        <div class="col-lg-3" style="height: 650px;">
+        <div class="col-lg-3" style="height: 680px;">
           <div class="panel panel-default" style="height: 100%;">
             <div class="panel-header">
               <h2 style="text-align:center;">MAYBE</h2>
             </div>
             <div class="panel-body">
-              <ul class="list-group" style="max-height:525px;overflow:auto;">
+              <ul class="list-group" style="max-height:550px;overflow:auto;">
                 <li class="list-group-item">
                   Legends
                   <span class="glyphicon glyphicon-remove badge-remove"></span>
@@ -72,7 +76,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-6" style="width: 50%; height: 650px;">
+        <div class="col-lg-6" style="width: 50%; height: 680px;">
           <div class="panel panel-default" style="width: 100%; height: 100%;">
             <div class="panel-body" style="width: 100%; height: 100%;">
               <h1 style="text-align:center;">WHY DON'T YOU FORKING GO TO...</h1>
@@ -83,28 +87,28 @@
                   <div class="well">Info about restuarant here</div>
                 </div>
               </div> -->
-              <div id="map-canvas" style="width: 100%; height: 250px"></div>
-              <br/>
-              <div class="row">
+              <div class="row" style="width: 100%;">
                 <div class="col-lg-4">
                   <div class="well well-sm">
                     <p>PRICE</p>
-                    <h1 style="text-align:center;">$$</h1>
+                    <p style="text-align:center;">$$</p>
                   </div>
-                </div>
-                <div class="col-lg-4">
                   <div class="well well-sm">
                     <p>DISTANCE</p>
-                    <h1 style="text-align:center;">1 MILE</h1>
+                    <p style="text-align:center;">1 MILE</p>
                   </div>
-                </div>
-                <div class="col-lg-4">
                   <div class="well well-sm">
                     <p>TYPE</p>
-                    <h1 style="text-align:center;">FAST FOOD</h1>
+                    <p style="text-align:center;">FAST FOOD</p>
                   </div>
                 </div>
+                <div class="col-lg-8" id="map-canvas" style="height:280px">
+                  <!-- <div id="map-canvas" style="float: right; width: 70%; height: 250px"></div> -->
+                </div>
+                <div id="legend"></div>
               </div>
+              
+              <br/>
               <div class="row">
                 <div class="col-lg-3">
                   <button class="btn btn-black btn-lg btn-block">MAYBE</button>
@@ -119,7 +123,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-3" style="text-align:center; height: 650px;">
+        <div class="col-lg-3" style="text-align:center; height: 680px;">
           <div class="panel panel-default" style="height: 100%;">
             <div class="panel-header">
               <h2>BLOCKED</h2>
