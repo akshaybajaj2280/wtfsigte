@@ -290,6 +290,11 @@ function block(obj){
 
 }
 
+function reject(){
+  idx++;
+  displayRestaurant(all_restaurants, idx);
+}
+
 function maybe(){
   var name = document.getElementById("restaurant-name").innerHTML;
   var spanid = name.toLowerCase();
@@ -301,7 +306,8 @@ function maybe(){
   newli.innerHTML = html;
   document.getElementById("maybelist").appendChild(newli);
   counter++;
-  displayRestaurant(all_restaurants, idx++);
+  idx++;
+  displayRestaurant(all_restaurants, idx);
 }
 
 function removeFromMaybe(obj){
