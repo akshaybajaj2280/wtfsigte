@@ -40,6 +40,7 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoFE_bD3BCvI_GGSkryOgEfgppsSn27fo&sensor=false">
     </script>
     <script src="js/map.js"></script>
+    <script src="js/mainjs.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -89,15 +90,15 @@
               </div> -->
               <div class="row" style="width: 100%;">
                 <div class="col-lg-4">
-                  <div class="well well-sm">
+                  <div id="price" class="well well-sm" onmouseover="hover(this)">
                     <p>PRICE</p>
                     <p style="text-align:center;">$$</p>
                   </div>
-                  <div class="well well-sm">
+                  <div id="distance" class="well well-sm" onmouseover="hover(this)">
                     <p>DISTANCE</p>
                     <p style="text-align:center;">1 MILE</p>
                   </div>
-                  <div class="well well-sm">
+                  <div id="type" class="well well-sm" onmouseover="hover(this)">
                     <p>TYPE</p>
                     <p style="text-align:center;">FAST FOOD</p>
                   </div>
