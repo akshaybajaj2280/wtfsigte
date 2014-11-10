@@ -1,4 +1,6 @@
 var directionsDisplay;
+var latitude = 0;
+var longitude = 0;
 var directionsService = new google.maps.DirectionsService();
 var map;
 var geocoder;
@@ -6,24 +8,25 @@ var priceFilter = "$$$$"
 var distFilter = 5;
 var typeFilter = new Array(0);
 var myLatlng = null;
-var tempDistance = 0;
+var tempDistance = -1;
 
 function displayRestaurant(all_restaurants, index) {
     // run filters
     var dest = all_restaurants[index]['name'] + ", " + all_restaurants[index]['location'].display_address.toString();
-    $.when(priceFilterFunct(all_restaurants[index].url), distFilterFunct(dest)).done(function(a1){
-
-      // generate the destination address as a string
-      // var dest = all_restaurants[index]['name'] + ", " + all_restaurants[index]['location'].display_address.toString();
+    $.when(priceFilterFunct(all_restaurants[index].url), calcDistancePHP(all_restaurants[index].location.coordinate.latitude, all_restaurants[index].location.coordinate.longitude)).done(function(a1, a2){
 
       // calculate distance
-      var distance = document.getElementById("distanceok").innerHTML;
+      var distance = a2[0];
       distance = parseFloat(distance.substring(0, distance.length - 3));
+
+      console.log("price: " + a1[0]);
+      console.log("distance: " + distance);
 
       // filter type
       var typeFound = $.inArray(all_restaurants[index].categories[0], typeFilter) > -1;
 
-      if (a1.length <= priceFilter.length && distance <= distFilter && !typeFound) {
+      if (a1[0].length <= priceFilter.length && distance <= distFilter && !typeFound) {
+
           console.log("ELIGIBLE");
           calcRoute(myLatlng, dest);
 
@@ -37,6 +40,7 @@ function displayRestaurant(all_restaurants, index) {
               mapOptions);
           directionsDisplay.setMap(map);
           createLegend(myLatlng);
+
       } else {
         console.log("one of these are not eligible");
         if (!(a1.length <= priceFilter.length)) {
@@ -68,7 +72,7 @@ function generateDestinations(latitude, longitude) {
                 $.get('yelp/yelp_api.php?location=' + user_location, function(data) {
                     all_restaurants = jQuery.parseJSON( data );
                     myLatlng = new google.maps.LatLng(latitude,longitude);
-                    displayRestaurant(all_restaurants, 0);
+                    displayRestaurant(all_restaurants, 3);
                 }); // end function
             }
         );
@@ -80,26 +84,17 @@ function priceFilterFunct(rest_url) {
     });
 }
 
-function distFilterFunct(dest) {
-    console.log("destination: " + dest);
-    var request = {
-      origin:myLatlng,
-      destination:dest,
-      travelMode: google.maps.TravelMode.DRIVING
-    };
-    directionsService.route(request, function(response, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
-          distance = response.routes[0].legs[0].distance.text;
-          tempDistance = jQuery.extend(true, {}, distance);
-        }
+function calcDistancePHP(end_lat, end_long) {
+    return $.ajax({
+        url: "getDistance.php?origins=" + latitude + "," + longitude + "&end=" + end_lat + "," + end_long
     });
 }
 
 function initialize() {
     geocoder = new google.maps.Geocoder();
     directionsDisplay = new google.maps.DirectionsRenderer();
-    var latitude = parseFloat(getParam("lat"));
-    var longitude = parseFloat(getParam("lon"));
+    latitude = parseFloat(getParam("lat"));
+    longitude = parseFloat(getParam("lon"));
     var all_restaurants = generateDestinations(latitude, longitude);
 }
 
@@ -132,6 +127,7 @@ function calcRoute(start, end) {
     directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
           distance = response.routes[0].legs[0].distance.text;
+          console.log("going to display " + distance);
           document.getElementById("distanceok").innerHTML = distance;
           directionsDisplay.setDirections(response);
         }
