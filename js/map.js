@@ -3,24 +3,48 @@ var directionsService = new google.maps.DirectionsService();
 var map;
 var geocoder;
 
+function generateDestinations(latitude, longitude) {
+  var myLatlng = new google.maps.LatLng(latitude,longitude);
+  // determine location from Google Geolocation
+    var google_url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + ',' + longitude + "&key=AIzaSyAoFE_bD3BCvI_GGSkryOgEfgppsSn27fo";
+        console.log("Getting location at: " + google_url);
+        $.getJSON(google_url,
+            function(data) {
+                user_location = data.results[1]['formatted_address'];
+                console.log("Location determined: " + user_location);
+
+                // call Yelp API
+                $.get('yelp/yelp_api.php?location=' + user_location, function(data) {
+                    all_restaurants = jQuery.parseJSON( data );
+
+                    console.log("returned results size of " + all_restaurants.length);
+                    var dest = all_restaurants[1]['name'] + ", " + all_restaurants[1]['location'].display_address.toString();
+
+                    // qualify
+
+                    calcRoute(myLatlng, dest);
+
+                    var mapOptions = {
+                      center: myLatlng,
+                      zoom: 11,
+                      disableDefaultUI: true
+                    };
+                    $("#restaurant-name").append(all_restaurants[1]['name']);
+                    map = new google.maps.Map(document.getElementById('map-canvas'),
+                        mapOptions);
+                    directionsDisplay.setMap(map);
+                    createLegend(myLatlng);
+                });
+            }
+        );
+}
+
 function initialize() {
     geocoder = new google.maps.Geocoder();
     directionsDisplay = new google.maps.DirectionsRenderer();
     var latitude = parseFloat(getParam("lat"));
     var longitude = parseFloat(getParam("lon"));
-    var myLatlng = new google.maps.LatLng(latitude,longitude);
-    var dest = "Black Dog Smoke & Ale House, North Broadway Avenue, Urbana, IL"; //TODO
-    calcRoute(myLatlng, dest);
-    
-    var mapOptions = {
-      center: myLatlng,
-      zoom: 11,
-      disableDefaultUI: true
-    };
-    map = new google.maps.Map(document.getElementById('map-canvas'),
-        mapOptions);
-    directionsDisplay.setMap(map);
-    createLegend(myLatlng);
+    var all_restaurants = generateDestinations(latitude, longitude);
 }
 
 function createLegend(latlng){

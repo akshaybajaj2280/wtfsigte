@@ -1,4 +1,3 @@
-#!/usr/bin/php
 <?php
 
 /**
@@ -34,7 +33,7 @@ $TOKEN_SECRET = "McVgOh0e6dXmGm1F8louB6HFd0g";
 $API_HOST = 'api.yelp.com';
 $DEFAULT_TERM = 'dinner';
 $DEFAULT_LOCATION = 'San Francisco, CA';
-$SEARCH_LIMIT = 10;
+$SEARCH_LIMIT = 5;
 $SEARCH_PATH = '/v2/search/';
 $BUSINESS_PATH = '/v2/business/';
 
@@ -141,6 +140,6 @@ function query_api($term, $location) {
 
 // THIS IS HOW YOU USE THE YELP API
 // query_api("TERM (food)", "LOCATION (Urbana, IL 61801)");
-query_api("food", $_POST['location']);
+query_api("food", $_GET['location']);
 
 ?>

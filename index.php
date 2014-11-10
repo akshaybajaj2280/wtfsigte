@@ -13,10 +13,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -45,7 +43,7 @@
       <div id="thanks" style="display:none;">
         <h1>WAIT THE FORK UP.</h1>
       </div>
-      
+
       <div id="manual" style="display:none;">
         <h1>TELL ME WHERE YOU FORKING ARE THEN.</h1>
         <input id="searchTextField" type="text" size="50">
