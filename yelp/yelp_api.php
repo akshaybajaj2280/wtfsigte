@@ -123,12 +123,6 @@ function query_api($term, $location) {
     foreach ($response->businesses as $business) {
         $business_ids[] = $business->id;
     }
-    // $business_id = $response->businesses[0]->id;
-
-    print sprintf(
-        "%d businesses found\n\n",
-        count($response->businesses)
-    );
 
     $response = "[";
     $i = 0;
@@ -142,11 +136,11 @@ function query_api($term, $location) {
     }
     $response .= "]";
 
-    // print sprintf("Result for business \"%s\" found:\n", $business_id);
     print "$response\n";
 }
 
 // THIS IS HOW YOU USE THE YELP API
 // query_api("TERM (food)", "LOCATION (Urbana, IL 61801)");
+query_api($_POST['term'], $_POST['location']);
 
 ?>
