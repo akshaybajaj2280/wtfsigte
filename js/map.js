@@ -16,26 +16,28 @@ function displayRestaurant(all_restaurants, index) {
     $.when(priceFilterFunct(all_restaurants[index].url), calcDistancePHP(all_restaurants[index].location.coordinate.latitude, all_restaurants[index].location.coordinate.longitude)).done(function(a1, a2){
 
       // calculate distance
+      var price = a1[0];
       var distance = a2[0];
       distance = parseFloat(distance.substring(0, distance.length - 3));
 
-      console.log("price: " + a1[0]);
+      console.log("price: " + price);
       console.log("distance: " + distance);
 
       // filter type
       var typeFound = $.inArray(all_restaurants[index].categories[0], typeFilter) > -1;
 
-      if (a1[0].length <= priceFilter.length && distance <= distFilter && !typeFound) {
+      if (price.length <= priceFilter.length && distance <= distFilter && !typeFound) {
 
           console.log("ELIGIBLE");
           calcRoute(myLatlng, dest);
+          document.getElementById("priceok").innerHTML = price;
 
           var mapOptions = {
             center: myLatlng,
             zoom: 11,
             disableDefaultUI: true
           };
-          $("#restaurant-name").append(all_restaurants[index]['name']);
+          $("#restaurant-name").append(all_restaurants[index]['name'].toUpperCase());
           map = new google.maps.Map(document.getElementById('map-canvas'),
               mapOptions);
           directionsDisplay.setMap(map);
@@ -72,7 +74,7 @@ function generateDestinations(latitude, longitude) {
                 $.get('yelp/yelp_api.php?location=' + user_location, function(data) {
                     all_restaurants = jQuery.parseJSON( data );
                     myLatlng = new google.maps.LatLng(latitude,longitude);
-                    displayRestaurant(all_restaurants, 3);
+                    displayRestaurant(all_restaurants, 1);
                 }); // end function
             }
         );
