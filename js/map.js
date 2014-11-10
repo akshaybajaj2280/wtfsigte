@@ -2,9 +2,60 @@ var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
 var geocoder;
+var priceFilter = "$$$$"
+var distFilter = 5;
+var typeFilter = new Array(0);
+var myLatlng = null;
+var tempDistance = 0;
+
+function displayRestaurant(all_restaurants, index) {
+    // run filters
+    var dest = all_restaurants[index]['name'] + ", " + all_restaurants[index]['location'].display_address.toString();
+    $.when(priceFilterFunct(all_restaurants[index].url), distFilterFunct(dest)).done(function(a1){
+
+      // generate the destination address as a string
+      // var dest = all_restaurants[index]['name'] + ", " + all_restaurants[index]['location'].display_address.toString();
+
+      // calculate distance
+      var distance = document.getElementById("distanceok").innerHTML;
+      distance = parseFloat(distance.substring(0, distance.length - 3));
+
+      // filter type
+      var typeFound = $.inArray(all_restaurants[index].categories[0], typeFilter) > -1;
+
+      if (a1.length <= priceFilter.length && distance <= distFilter && !typeFound) {
+          console.log("ELIGIBLE");
+          calcRoute(myLatlng, dest);
+
+          var mapOptions = {
+            center: myLatlng,
+            zoom: 11,
+            disableDefaultUI: true
+          };
+          $("#restaurant-name").append(all_restaurants[index]['name']);
+          map = new google.maps.Map(document.getElementById('map-canvas'),
+              mapOptions);
+          directionsDisplay.setMap(map);
+          createLegend(myLatlng);
+      } else {
+        console.log("one of these are not eligible");
+        if (!(a1.length <= priceFilter.length)) {
+          console.log("price failed");
+        }
+        if (!(distance <= distFilter)) {
+          console.log("distance failed");
+        }
+        if (typeFound) {
+          console.log("type failed");
+        }
+      }
+
+    // run typeFilter
+    });
+
+}
 
 function generateDestinations(latitude, longitude) {
-  var myLatlng = new google.maps.LatLng(latitude,longitude);
   // determine location from Google Geolocation
     var google_url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + ',' + longitude + "&key=AIzaSyAoFE_bD3BCvI_GGSkryOgEfgppsSn27fo";
         console.log("Getting location at: " + google_url);
@@ -16,27 +67,32 @@ function generateDestinations(latitude, longitude) {
                 // call Yelp API
                 $.get('yelp/yelp_api.php?location=' + user_location, function(data) {
                     all_restaurants = jQuery.parseJSON( data );
-
-                    console.log("returned results size of " + all_restaurants.length);
-                    var dest = all_restaurants[1]['name'] + ", " + all_restaurants[1]['location'].display_address.toString();
-
-                    // qualify
-
-                    calcRoute(myLatlng, dest);
-
-                    var mapOptions = {
-                      center: myLatlng,
-                      zoom: 11,
-                      disableDefaultUI: true
-                    };
-                    $("#restaurant-name").append(all_restaurants[1]['name']);
-                    map = new google.maps.Map(document.getElementById('map-canvas'),
-                        mapOptions);
-                    directionsDisplay.setMap(map);
-                    createLegend(myLatlng);
-                });
+                    myLatlng = new google.maps.LatLng(latitude,longitude);
+                    displayRestaurant(all_restaurants, 0);
+                }); // end function
             }
         );
+}
+
+function priceFilterFunct(rest_url) {
+    return $.ajax({
+        url: "getPrice.php?website=" + rest_url
+    });
+}
+
+function distFilterFunct(dest) {
+    console.log("destination: " + dest);
+    var request = {
+      origin:myLatlng,
+      destination:dest,
+      travelMode: google.maps.TravelMode.DRIVING
+    };
+    directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          distance = response.routes[0].legs[0].distance.text;
+          tempDistance = jQuery.extend(true, {}, distance);
+        }
+    });
 }
 
 function initialize() {
@@ -75,6 +131,8 @@ function calcRoute(start, end) {
     };
     directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
+          distance = response.routes[0].legs[0].distance.text;
+          document.getElementById("distanceok").innerHTML = distance;
           directionsDisplay.setDirections(response);
         }
     });
