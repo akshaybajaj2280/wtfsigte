@@ -42,7 +42,8 @@ function block(obj){
   var id = obj.id;
   if (id == "price" && priceclicked===0){
         priceclicked=1;
-        var html = 'PRICE: $$';
+        var currprice = document.getElementById("priceok").innerHTML;
+        var html = 'PRICES > ' + currprice;
         var newli = document.createElement('li');
         newli.setAttribute("class", "list-group-item");
         newli.innerHTML = html;
@@ -53,7 +54,8 @@ function block(obj){
   }
   else if (id=="distance" && distanceclicked===0){
         distanceclicked=1;
-        var html = 'DISTANCE: >1 MILE';
+        var currdist = document.getElementById("distanceok").innerHTML;
+        var html = 'DISTANCES > ' + currdist;
         var newli = document.createElement('li');
         newli.setAttribute("class", "list-group-item");
         newli.innerHTML = html;
@@ -64,7 +66,8 @@ function block(obj){
   }
   else if(id=="type" && typeclicked===0){
         typeclicked=1;
-        var html = 'TYPE: FAST FOOD';
+        var currtype = document.getElementById("typeok").innerHTML;
+        var html = 'TYPE: '+ currtype.toUpperCase();
         var newli = document.createElement('li');
         newli.setAttribute("class", "list-group-item");
         newli.innerHTML = html;
@@ -74,7 +77,8 @@ function block(obj){
         document.getElementById("typebad").style.display = "block";
   }
   else if(id=="blockplace"){
-        var html = 'Legends Bar & Grill';
+        var name = document.getElementById("restaurant-name").innerHTML;
+        var html = name.toUpperCase();
         var newli = document.createElement('li');
         newli.setAttribute("class", "list-group-item");
         newli.innerHTML = html;
@@ -87,11 +91,13 @@ function block(obj){
 }
 
 function maybe(){
-  var name = 'Legends'+counter;
-  var html = name + '<span id=' + name.toLowerCase() + ' class="glyphicon glyphicon-remove badge-remove" onclick="removeFromMaybe(this)"></span>';
+  var name = document.getElementById("restaurant-name").innerHTML;
+  var spanid = name.toLowerCase();
+  spanid = spanid.replace(/ /g,'');
+  var html = name.toUpperCase() + '<span id=' + spanid + ' class="glyphicon glyphicon-remove badge-remove" onclick="removeFromMaybe(this)"></span>';
   var newli = document.createElement('li');
   newli.setAttribute("class", "list-group-item");
-  newli.setAttribute("id", "list"+name.toLowerCase());
+  newli.setAttribute("id", "list"+spanid);
   newli.innerHTML = html;
   document.getElementById("maybelist").appendChild(newli);
   counter++;
