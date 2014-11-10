@@ -62,19 +62,7 @@
               <h2 style="text-align:center;">MAYBE</h2>
             </div>
             <div class="panel-body">
-              <ul class="list-group" style="max-height:550px;overflow:auto;">
-                <li class="list-group-item">
-                  Legends
-                  <span class="glyphicon glyphicon-remove badge-remove"></span>
-                </li>
-                <li class="list-group-item">
-                  Brother's
-                  <span class="glyphicon glyphicon-remove badge-remove"></span>
-                </li>
-                <li class="list-group-item">
-                  Black Dog
-                  <span class="glyphicon glyphicon-remove badge-remove"></span>
-                </li>
+              <ul id="maybelist" class="list-group" style="max-height:550px;overflow:auto;">
               </ul>
             </div>
           </div>
@@ -92,17 +80,17 @@
               </div> -->
               <div class="row" style="width: 100%;">
                 <div class="col-lg-4">
-                  <div id="price" class="well well-sm" onmouseover="hover(this)" onmouseout="hoverout(this)">
+                  <div id="price" class="well well-sm" onmouseover="hover(this)" onmouseout="hoverout(this)" onclick="block(this)">
                     <p>PRICE</p>
                     <p id="priceok" style="text-align:center;"></p>
                     <p id="pricebad" style="text-align:center; display:none;">TOO FORKING PRICEY</p>
                   </div>
-                  <div id="distance" class="well well-sm" onmouseover="hover(this)" onmouseout="hoverout(this)">
+                  <div id="distance" class="well well-sm" onmouseover="hover(this)" onmouseout="hoverout(this)" onclick="block(this)">
                     <p>DISTANCE</p>
                     <p id="distanceok" style="text-align:center;"></p>
                     <p id="distancebad" style="text-align:center; display:none;">TOO FORKING FAR</p>
                   </div>
-                  <div id="type" class="well well-sm" onmouseover="hover(this)" onmouseout="hoverout(this)">
+                  <div id="type" class="well well-sm" onmouseover="hover(this)" onmouseout="hoverout(this)" onclick="block(this)">
                     <p>TYPE</p>
                     <p id="typeok" style="text-align:center;"></p>
                     <p id="typebad" style="text-align:center; display:none;">I DON'T FORKING WANT THAT</p>
@@ -117,25 +105,26 @@
               <br/>
               <div class="row">
                 <div class="col-lg-3">
-                  <button class="btn btn-black btn-lg btn-block">MAYBE</button>
+                  <button class="btn btn-black btn-lg btn-block" onclick="maybe()">MAYBE</button>
                 </div>
                 <div class="col-lg-6">
                   <button class="btn btn-black btn-lg btn-block">NO, FORK THAT</button>
                 </div>
                 <div class="col-lg-3">
-                  <button class="btn btn-black btn-lg btn-block">BLOCK</button>
+                  <button id="blockplace" class="btn btn-black btn-lg btn-block" onclick="block(this)">BLOCK</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-lg-3" style="text-align:center; height: 680px;">
+        <div class="col-lg-3" style="height: 680px;">
           <div class="panel panel-default" style="height: 100%;">
             <div class="panel-header">
-              <h2>BLOCKED</h2>
+              <h2 style="text-align:center;">BLOCKED</h2>
             </div>
             <div class="panel-body">
-              lalalala
+              <ul id = "blocklist" class="list-group" style="max-height:550px;overflow:auto;">
+              </ul>
             </div>
           </div>
         </div>
