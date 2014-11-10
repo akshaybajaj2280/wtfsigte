@@ -10,7 +10,6 @@ if (navigator.geolocation)
     (
         function( position )
         {
-
             // alert( 'lat: ' + position.coords.latitude + ' long:' + position.coords.longitude );
             var google_url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + position.coords.latitude + ',' + position.coords.longitude + "&key=AIzaSyAoFE_bD3BCvI_GGSkryOgEfgppsSn27fo";
             console.log("Getting location at: " + google_url);
