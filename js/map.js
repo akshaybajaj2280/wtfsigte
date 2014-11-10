@@ -18,19 +18,29 @@ function displayRestaurant(all_restaurants, index) {
       // calculate distance
       var price = a1[0];
       var distance = a2[0];
+      var type = null;
+      if (all_restaurants[index].categories[0] instanceof Array) {
+        type = all_restaurants[index].categories[0][0];
+      } else {
+        type = all_restaurants[index].categories[0];
+      }
+      type = type.toUpperCase();
+
       distance = parseFloat(distance.substring(0, distance.length - 3));
 
-      console.log("price: " + price);
-      console.log("distance: " + distance);
+      // console.log("price: " + price);
+      // console.log("distance: " + distance);
+      // console.log("type: " + type);
 
       // filter type
       var typeFound = $.inArray(all_restaurants[index].categories[0], typeFilter) > -1;
 
       if (price.length <= priceFilter.length && distance <= distFilter && !typeFound) {
 
-          console.log("ELIGIBLE");
+          // console.log("ELIGIBLE");
           calcRoute(myLatlng, dest);
           document.getElementById("priceok").innerHTML = price;
+          document.getElementById("typeok").innerHTML = type;
 
           var mapOptions = {
             center: myLatlng,
@@ -44,16 +54,16 @@ function displayRestaurant(all_restaurants, index) {
           createLegend(myLatlng);
 
       } else {
-        console.log("one of these are not eligible");
-        if (!(a1.length <= priceFilter.length)) {
-          console.log("price failed");
-        }
-        if (!(distance <= distFilter)) {
-          console.log("distance failed");
-        }
-        if (typeFound) {
-          console.log("type failed");
-        }
+        // console.log("one of these are not eligible");
+        // if (!(a1.length <= priceFilter.length)) {
+        //   console.log("price failed");
+        // }
+        // if (!(distance <= distFilter)) {
+        //   console.log("distance failed");
+        // }
+        // if (typeFound) {
+        //   console.log("type failed");
+        // }
       }
 
     // run typeFilter
@@ -64,17 +74,17 @@ function displayRestaurant(all_restaurants, index) {
 function generateDestinations(latitude, longitude) {
   // determine location from Google Geolocation
     var google_url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + ',' + longitude + "&key=AIzaSyAoFE_bD3BCvI_GGSkryOgEfgppsSn27fo";
-        console.log("Getting location at: " + google_url);
+        // console.log("Getting location at: " + google_url);
         $.getJSON(google_url,
             function(data) {
                 user_location = data.results[1]['formatted_address'];
-                console.log("Location determined: " + user_location);
+                // console.log("Location determined: " + user_location);
 
                 // call Yelp API
                 $.get('yelp/yelp_api.php?location=' + user_location, function(data) {
                     all_restaurants = jQuery.parseJSON( data );
                     myLatlng = new google.maps.LatLng(latitude,longitude);
-                    displayRestaurant(all_restaurants, 1);
+                    displayRestaurant(all_restaurants, 2);
                 }); // end function
             }
         );
@@ -129,7 +139,7 @@ function calcRoute(start, end) {
     directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
           distance = response.routes[0].legs[0].distance.text;
-          console.log("going to display " + distance);
+          // console.log("going to display " + distance);
           document.getElementById("distanceok").innerHTML = distance;
           directionsDisplay.setDirections(response);
         }
