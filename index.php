@@ -17,6 +17,7 @@
 
     <!-- Custom styles for this template -->
     <link href="starter-template.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -33,11 +34,28 @@
 
   <body>
 
-    <div class="container" style="text-align:center;">
-      <br/><br/>
-      <h1>Getting your location...</h1>
-      <div id="location">Please wait...</div>
 
+    <div class="container" style="text-align:center;">
+      <br/><br/><br/><br/><br/><br/>
+
+      <div id ="auto" style="display:block;">
+        <h1>ALLOW US TO FIND YOU.</h1>
+      </div>
+
+      <div id="thanks" style="display:none;">
+        <h1>WAIT THE FORK UP.</h1>
+      </div>
+      
+      <div id="manual" style="display:none;">
+        <h1>TELL ME WHERE YOU FORKING ARE THEN.</h1>
+        <input id="searchTextField" type="text" size="50">
+
+        <script>
+          var input = document.getElementById('searchTextField');
+          var autocomplete = new google.maps.places.Autocomplete(input);
+
+        </script>
+    </div>
     </div><!-- /.container -->
 
 

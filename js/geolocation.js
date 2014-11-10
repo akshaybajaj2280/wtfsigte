@@ -10,6 +10,7 @@ if (navigator.geolocation)
     (
         function( position )
         {
+
             // alert( 'lat: ' + position.coords.latitude + ' long:' + position.coords.longitude );
             var google_url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + position.coords.latitude + ',' + position.coords.longitude;
             console.log("Getting location at: " + google_url);
@@ -17,8 +18,6 @@ if (navigator.geolocation)
                 function(data) {
                     user_location = data.results[1]['formatted_address'];
                     console.log("Location determined: " + user_location);
-                    var location_div=document.getElementById('location');
-                    location_div.innerHTML="<h3>Looks like you're in " + user_location + "</h3>";
 
                     var url = "main.html" + "?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude;
                     window.location.href = url;
@@ -27,9 +26,31 @@ if (navigator.geolocation)
 
         },
         function( error ){
-            console.log("User refused to share location or there was an error: ", error);
-            var location_div=document.getElementById('location');
-            location_div.innerHTML="<h3>Don't like sharing? Input an address and we'll try to help anyways... TODO</h3>";
+            //console.log("User refused to share location or there was an error: ", error);
+            
+            $("#auto").css("display","none");
+            $("#manual").css("display", "block");
+            google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                var place = autocomplete.getPlace();
+
+                var latitude = place.geometry.location.lat();
+                var longitude = place.geometry.location.lng();
+
+                var google_url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + ',' + longitude;
+                //console.log("Getting location at: " + google_url);
+                $.getJSON(google_url,
+                    function(data) {
+                        user_location = data.results[1]['formatted_address'];
+                        console.log("Location determined: " + user_location);
+
+                        var url = "main.html" + "?lat=" + latitude + "&lon=" + longitude;
+                        window.location.href = url;
+                    }
+                );
+     
+                    //alert($("#searchTextField").val());
+                });
+
         },
         {
             timeout: (5 * 1000),
@@ -38,3 +59,4 @@ if (navigator.geolocation)
         }
     );
 }
+
