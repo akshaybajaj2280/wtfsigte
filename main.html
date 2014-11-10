@@ -39,6 +39,8 @@
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoFE_bD3BCvI_GGSkryOgEfgppsSn27fo&sensor=false">
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
     <script src="js/map.js"></script>
     <script src="js/mainjs.js"></script>
 
@@ -90,17 +92,20 @@
               </div> -->
               <div class="row" style="width: 100%;">
                 <div class="col-lg-4">
-                  <div id="price" class="well well-sm" onmouseover="hover(this)">
+                  <div id="price" class="well well-sm" onmouseover="hover(this)" onmouseout="hoverout(this)">
                     <p>PRICE</p>
-                    <p style="text-align:center;">$$</p>
+                    <p id="priceok" style="text-align:center;">$$</p>
+                    <p id="pricebad" style="text-align:center; display:none;">TOO FORKING PRICEY</p>
                   </div>
-                  <div id="distance" class="well well-sm" onmouseover="hover(this)">
+                  <div id="distance" class="well well-sm" onmouseover="hover(this)" onmouseout="hoverout(this)">
                     <p>DISTANCE</p>
-                    <p style="text-align:center;">1 MILE</p>
+                    <p id="distanceok" style="text-align:center;">1 MILE</p>
+                    <p id="distancebad" style="text-align:center; display:none;">TOO FORKING FAR</p>
                   </div>
-                  <div id="type" class="well well-sm" onmouseover="hover(this)">
+                  <div id="type" class="well well-sm" onmouseover="hover(this)" onmouseout="hoverout(this)">
                     <p>TYPE</p>
-                    <p style="text-align:center;">FAST FOOD</p>
+                    <p id="typeok" style="text-align:center;">FAST FOOD</p>
+                    <p id="typebad" style="text-align:center; display:none;">I DON'T FORKING WANT THAT</p>
                   </div>
                 </div>
                 <div class="col-lg-8" id="map-canvas" style="height:280px">
@@ -141,7 +146,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>
