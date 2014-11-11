@@ -14,7 +14,20 @@ var all_restaurants = null;
 
 function displayRestaurant(all_restaurants, index) {
     // run filters
-    console.log("on index " + index);
+    console.log("testing index " + index);
+    if ((index + 1) > all_restaurants.length) {
+      console.log("Ran out of suggestions.");
+      document.getElementById("main-panel").style.display = "none";
+      document.getElementById("maybecol").style.visibility = "hidden";
+      document.getElementById("blockcol").style.display = "none";
+      document.getElementById("spinner").style.display = "none";
+      document.getElementById("finished").style.display = "block";
+      return;
+    }
+    document.getElementById("main-panel").style.display = "none";
+    document.getElementById("spinner").style.display = "block";
+
+
     var dest = all_restaurants[index]['name'] + ", " + all_restaurants[index]['location'].display_address.toString();
     $.when(priceFilterFunct(all_restaurants[index].url), calcDistancePHP(all_restaurants[index].location.coordinate.latitude, all_restaurants[index].location.coordinate.longitude)).done(function(a1, a2){
 
@@ -36,9 +49,9 @@ function displayRestaurant(all_restaurants, index) {
       // console.log("type: " + type);
 
       // filter type
-      var typeFound = $.inArray(all_restaurants[index].categories[0], typeFilter) > -1;
+      var typeFound = $.inArray(type.toLowerCase(), typeFilter) > -1;
 
-      if (price.length <= priceFilter.length && distance <= distFilter && !typeFound) {
+      if (price.length < priceFilter.length && distance < distFilter && !typeFound) {
 
           // console.log("ELIGIBLE");
           calcRoute(myLatlng, dest);
@@ -54,6 +67,9 @@ function displayRestaurant(all_restaurants, index) {
           map = new google.maps.Map(document.getElementById('map-canvas'),
               mapOptions);
           directionsDisplay.setMap(map);
+
+          document.getElementById("spinner").style.display = "none";
+          document.getElementById("main-panel").style.display = "block";
           // createLegend(myLatlng);
 
       } else {
@@ -67,6 +83,8 @@ function displayRestaurant(all_restaurants, index) {
         // if (typeFound) {
         //   console.log("type failed");
         // }
+        idx++;
+        displayRestaurant(all_restaurants, (index + 1));
       }
 
     // run typeFilter
@@ -76,6 +94,8 @@ function displayRestaurant(all_restaurants, index) {
 
 function generateDestinations(latitude, longitude) {
   // determine location from Google Geolocation
+  document.getElementById("main-panel").style.display = "none";
+  document.getElementById("spinner").style.display = "block";
     var google_url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + ',' + longitude + "&key=AIzaSyAoFE_bD3BCvI_GGSkryOgEfgppsSn27fo";
         // console.log("Getting location at: " + google_url);
         $.getJSON(google_url,
@@ -233,11 +253,18 @@ function hoverout(obj){
   }
 }
 
+
+
+
 function block(obj){
   var id = obj.id;
+
   if (id == "price" && priceclicked===0){
         priceclicked=1;
+
         var currprice = document.getElementById("priceok").innerHTML;
+        priceFilter = currprice;
+        console.log("Too expensive. New maximum price set to " + priceFilter);
         var html = 'PRICES > ' + currprice;
         var newli = document.createElement('li');
         newli.setAttribute("class", "list-group-item");
@@ -251,6 +278,8 @@ function block(obj){
   else if (id=="distance" && distanceclicked===0){
         distanceclicked=1;
         var currdist = document.getElementById("distanceok").innerHTML;
+        distFilter = parseFloat(currdist.substring(0, distance.length - 3));
+        console.log("Too far. New maximum distance set to " + distFilter);
         var html = 'DISTANCES > ' + currdist;
         var newli = document.createElement('li');
         newli.setAttribute("class", "list-group-item");
@@ -262,7 +291,10 @@ function block(obj){
   }
   else if(id=="type" && typeclicked===0){
         typeclicked=1;
+
         var currtype = document.getElementById("typeok").innerHTML;
+        typeFilter.push(currtype.toLowerCase());
+        console.log("Too " + currtype + ". Removing from type suggestions.");
         var html = 'TYPE: '+ currtype.toUpperCase();
         var newli = document.createElement('li');
         newli.setAttribute("class", "list-group-item");
@@ -271,6 +303,7 @@ function block(obj){
 
         document.getElementById("typeok").style.display = "none";
         document.getElementById("typebad").style.display = "block";
+
   }
   else if(id=="blockplace"){
         var name = document.getElementById("restaurant-name").innerHTML;
@@ -283,11 +316,18 @@ function block(obj){
   else{
     idx++;
     displayRestaurant(all_restaurants, idx);
+    resetFlags();
     return;
   }
   idx++;
   displayRestaurant(all_restaurants, idx);
+  resetFlags();
+}
 
+function resetFlags(){
+  priceclicked=0;
+  distanceclicked=0;
+  typeclicked=0;
 }
 
 function reject(){

@@ -37,7 +37,7 @@
       <br/><br/><br/><br/><br/><br/>
 
       <div id ="auto" style="display:block;">
-        <h1>ALLOW US TO FIND YOU.</h1>
+        <h1>FORKING ALLOW US TO FIND YOU.</h1>
       </div>
 
       <div id="thanks" style="display:none;">
