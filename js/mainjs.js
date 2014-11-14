@@ -68,7 +68,7 @@ function displayRestaurant(all_restaurants, index) {
           var url = all_restaurants[index]['url'];
           var phone = all_restaurants[index]['display_phone'];
           var address = all_restaurants[index]['location'].display_address.toString();
-          $("#restaurant-name").html('<a href='+ url + '>' +all_restaurants[index]['name'].toUpperCase() + '</a>');
+          $("#restaurant-name").html('<a id="restaurant-title" href='+ url + '>' +all_restaurants[index]['name'].toUpperCase() + '</a>');
           $("#restaurant-info").html(phone + ' | ' + address);
           
             
@@ -316,7 +316,7 @@ function block(obj){
 
   }
   else if(id=="blockplace"){
-        var name = document.getElementById("restaurant-name").innerHTML;
+        var name = document.getElementById("restaurant-title").innerHTML;
         var html = name.toUpperCase();
         var newli = document.createElement('li');
         newli.setAttribute("class", "list-group-item");
@@ -346,7 +346,7 @@ function reject(){
 }
 
 function maybe(){
-  var name = document.getElementById("restaurant-name").innerHTML;
+  var name = document.getElementById("restaurant-title").innerHTML;
   var spanid = name.toLowerCase();
   spanid = spanid.replace(/ /g,'');
   var html = name.toUpperCase() + '<span id=' + spanid + ' class="glyphicon glyphicon-remove badge-remove" onclick="removeFromMaybe(this)"></span>';
