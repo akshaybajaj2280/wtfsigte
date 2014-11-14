@@ -227,6 +227,8 @@ var priceclicked;
 var distanceclicked;
 var typeclicked;
 var counter;
+var maybearr;
+var blockarr;
 
 function hover(obj){
   var id = obj.id;
@@ -263,75 +265,116 @@ function hoverout(obj){
   }
 }
 
+function showBlockList(){
+  var html = "";
+  for (var i = 0; i < blockarr.length; i++){
+    var name = blockarr[i];
+    html += '<li class="list-group-item">' + name + '</li>';
+  }
+  document.getElementById("blocklist").innerHTML = html;
+  
+}
 
 
 
 function block(obj){
-  var id = obj.id;
+  var id = obj.id;
 
-  if (id == "price" && priceclicked===0){
-        priceclicked=1;
+  if (id == "price" && priceclicked===0){
+        priceclicked=1;
 
-        var currprice = document.getElementById("priceok").innerHTML;
-        priceFilter = currprice;
-        console.log("Too expensive. New maximum price set to " + priceFilter);
-        var html = 'PRICES > ' + currprice;
-        var newli = document.createElement('li');
-        newli.setAttribute("class", "list-group-item");
-        newli.innerHTML = html;
-        document.getElementById("blocklist").appendChild(newli);
+        var currprice = document.getElementById("priceok").innerHTML;
+        priceFilter = currprice;
+        console.log("Too expensive. New maximum price set to " + priceFilter);
+        // var html = 'PRICES > ' + currprice;
 
-        document.getElementById("priceok").style.display = "none";
-        document.getElementById("pricebad").style.display = "block";
+        var name = 'PRICES > ' + currprice;
+        blockarr.push(name);
+        var blockhidebutton = document.getElementById("blockhider");
 
-  }
-  else if (id=="distance" && distanceclicked===0){
-        distanceclicked=1;
-        var currdist = document.getElementById("distanceok").innerHTML;
-        distFilter = parseFloat(currdist.substring(0, distance.length - 3));
-        console.log("Too far. New maximum distance set to " + distFilter);
-        var html = 'DISTANCES > ' + currdist;
-        var newli = document.createElement('li');
-        newli.setAttribute("class", "list-group-item");
-        newli.innerHTML = html;
-        document.getElementById("blocklist").appendChild(newli);
+        if (blockhidebutton.className == "glyphicon glyphicon-collapse-up"){
+          showBlockList();
+        }
 
-        document.getElementById("distanceok").style.display = "none";
-        document.getElementById("distancebad").style.display = "block";
-  }
-  else if(id=="type" && typeclicked===0){
-        typeclicked=1;
+        // var newli = document.createElement('li');
+        // newli.setAttribute("class", "list-group-item");
+        // newli.innerHTML = html;
+        // document.getElementById("blocklist").appendChild(newli);
 
-        var currtype = document.getElementById("typeok").innerHTML;
-        typeFilter.push(currtype.toLowerCase());
-        console.log("Too " + currtype + ". Removing from type suggestions.");
-        var html = 'TYPE: '+ currtype.toUpperCase();
-        var newli = document.createElement('li');
-        newli.setAttribute("class", "list-group-item");
-        newli.innerHTML = html;
-        document.getElementById("blocklist").appendChild(newli);
+        document.getElementById("priceok").style.display = "none";
+        document.getElementById("pricebad").style.display = "block";
 
-        document.getElementById("typeok").style.display = "none";
-        document.getElementById("typebad").style.display = "block";
+  }
+  else if (id=="distance" && distanceclicked===0){
+        distanceclicked=1;
+        var currdist = document.getElementById("distanceok").innerHTML;
+        distFilter = parseFloat(currdist.substring(0, distance.length - 3));
+        console.log("Too far. New maximum distance set to " + distFilter);
+        // var html = 'DISTANCES > ' + currdist;
+        // var newli = document.createElement('li');
+        // newli.setAttribute("class", "list-group-item");
+        // newli.innerHTML = html;
+        // document.getElementById("blocklist").appendChild(newli);
+        // 
+        var name = 'DISTANCES > ' + currdist;
+        blockarr.push(name);
+        var blockhidebutton = document.getElementById("blockhider");
 
-  }
-  else if(id=="blockplace"){
-        var name = document.getElementById("restaurant-title").innerHTML;
-        var html = name.toUpperCase();
-        var newli = document.createElement('li');
-        newli.setAttribute("class", "list-group-item");
-        newli.innerHTML = html;
-        document.getElementById("blocklist").appendChild(newli);
-  }
-  else{
-    idx++;
-    displayRestaurant(all_restaurants, idx);
-    resetFlags();
-    return;
-  }
-  idx++;
-  displayRestaurant(all_restaurants, idx);
-  resetFlags();
+        if (blockhidebutton.className == "glyphicon glyphicon-collapse-up"){
+          showBlockList();
+        }
+
+        document.getElementById("distanceok").style.display = "none";
+        document.getElementById("distancebad").style.display = "block";
+  }
+  else if(id=="type" && typeclicked===0){
+        typeclicked=1;
+
+        var currtype = document.getElementById("typeok").innerHTML;
+        typeFilter.push(currtype.toLowerCase());
+        console.log("Too " + currtype + ". Removing from type suggestions.");
+        // var html = 'TYPE: '+ currtype.toUpperCase();
+        // var newli = document.createElement('li');
+        // newli.setAttribute("class", "list-group-item");
+        // newli.innerHTML = html;
+        // document.getElementById("blocklist").appendChild(newli);
+        
+        var name = 'TYPE: '+ currtype.toUpperCase();
+        blockarr.push(name);
+        var blockhidebutton = document.getElementById("blockhider");
+
+        if (blockhidebutton.className == "glyphicon glyphicon-collapse-up"){
+          showBlockList();
+        }
+
+        document.getElementById("typeok").style.display = "none";
+        document.getElementById("typebad").style.display = "block";
+
+  }
+  else if(id=="blockplace"){
+        var restname = document.getElementById("restaurant-title").innerHTML;
+        // var html = name.toUpperCase();
+        // var newli = document.createElement('li');
+        // newli.setAttribute("class", "list-group-item");
+        // newli.innerHTML = html;
+        // document.getElementById("blocklist").appendChild(newli);
+        var name = restname.toUpperCase();
+        blockarr.push(name);
+        var blockhidebutton = document.getElementById("blockhider");
+
+        if (blockhidebutton.className == "glyphicon glyphicon-collapse-up"){
+          showBlockList();
+        }
+  }
+  else{
+    idx++;
+    displayRestaurant(all_restaurants, idx);
+    resetFlags();
+    return;
+  }
+  idx++;
+  displayRestaurant(all_restaurants, idx);
+  resetFlags();
 }
 
 function resetFlags(){
@@ -345,26 +388,62 @@ function reject(){
   displayRestaurant(all_restaurants, idx);
 }
 
+
+
+
+
 function maybe(){
-  var name = document.getElementById("restaurant-title").innerHTML;
-  var spanid = name.toLowerCase();
-  spanid = spanid.replace(/ /g,'');
-  var html = name.toUpperCase() + '<span id=' + spanid + ' class="glyphicon glyphicon-remove badge-remove" onclick="removeFromMaybe(this)"></span>';
-  var newli = document.createElement('li');
-  newli.setAttribute("class", "list-group-item");
-  newli.setAttribute("id", "list"+spanid);
-  newli.innerHTML = html;
-  document.getElementById("maybelist").appendChild(newli);
-  counter++;
-  idx++;
-  displayRestaurant(all_restaurants, idx);
+  var name = document.getElementById("restaurant-title").innerHTML;
+  name = name.toUpperCase();
+  var id = name.toLowerCase();
+  id = id.replace(/ /g,'');
+  id = id.replace('&', '');
+  maybearr.push({
+    id: id,
+    name: name
+  });
+  var maybehidebutton = document.getElementById("maybehider");
+
+  if (maybehidebutton.className == "glyphicon glyphicon-collapse-up"){
+    showMaybeList();
+  }
+  counter++;
+  idx++;
+  displayRestaurant(all_restaurants, idx);
+}
+
+
+function showMaybeList(){
+  var html = "";
+  for (var i = 0; i < maybearr.length; i++){
+    var name = maybearr[i].name;
+    var spanid = maybearr[i].id;
+    // var spanid = name.toLowerCase();
+    // spanid = spanid.replace(/ /g,'');
+    html += '<li class="list-group-item" id="list' + spanid + '">' + name + '<span id=' + spanid + ' class="glyphicon glyphicon-remove badge-remove" onclick="removeFromMaybe(this)"></span></li>';
+  }
+  document.getElementById("maybelist").innerHTML = html;
+  // var spanid = name.toLowerCase();
+  // spanid = spanid.replace(/ /g,'');
+  // var html = name + '<span id=' + spanid + ' class="glyphicon glyphicon-remove badge-remove" onclick="removeFromMaybe(this)"></span>';
+  // var newli = document.createElement('li');
+  // newli.setAttribute("class", "list-group-item");
+  // newli.setAttribute("id", "list"+spanid);
+  // newli.innerHTML = html;
+  
 }
 
 function removeFromMaybe(obj){
-  var id = obj.id;
-  var listid = "list" + id;
-  var listitem = document.getElementById(listid);
-  listitem.parentNode.removeChild(listitem);
+  var id = obj.id;
+  var listid = "list" + id;
+  var listitem = document.getElementById(listid);
+  listitem.parentNode.removeChild(listitem);
+  for (var i = 0; i < maybearr.length; i++){
+    var itemid = maybearr[i].id;
+    if(itemid==id){
+      maybearr.splice(i, 1);
+    }
+  }
 }
 
 function togglemaybe(obj){
@@ -378,6 +457,7 @@ function togglemaybe(obj){
     document.getElementById("maybebody").style.display="block";
     obj.setAttribute("class", "glyphicon glyphicon-collapse-up");
     document.getElementById("maybecol").style.height = "680px";
+    showMaybeList();
   }
   else{
     alert("error with getting classname");
@@ -395,6 +475,7 @@ function toggleblock(obj){
     document.getElementById("blockbody").style.display="block";
     obj.setAttribute("class", "glyphicon glyphicon-collapse-up");
     document.getElementById("blockcol").style.height = "680px";
+    showBlockList();
   }
   else{
     alert("error with getting classname");
@@ -406,4 +487,6 @@ $(document).ready(function() {
   priceclicked=0;
   distanceclicked=0;
   typeclicked=0;
+  maybearr = [];
+  blockarr = [];
 });
