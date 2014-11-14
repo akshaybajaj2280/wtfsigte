@@ -7,6 +7,7 @@ $mid_pos = strpos($html, ">");
 $html = substr($html, $mid_pos + 1, strlen($html));
 $end_pos = strpos($html, '</span>');
 $price = substr($html, 0, $end_pos);
+
 echo $price;
 
 ?>

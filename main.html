@@ -57,10 +57,10 @@
 
         <div id="maybecol" class="col-lg-3" style="height: 680px;">
           <div class="panel panel-default" style="height: 100%;">
-            <div class="panel-header">
-              <h2 style="text-align:center;">MAYBE</h2>
+            <div class="panel-header" style="padding-left:2em; padding-right:2em;">
+              <h2>MAYBE<span class="glyphicon glyphicon-collapse-up" style="float:right;" onclick="togglemaybe(this)"></span></h2>
             </div>
-            <div class="panel-body">
+            <div class="panel-body" id="maybebody">
               <ul id="maybelist" class="list-group" style="max-height:550px;overflow:auto;">
               </ul>
             </div>
@@ -84,6 +84,7 @@
             <div class="panel-body" style="width: 100%; height: 100%;">
               <h1 style="text-align:center;">WHY DON'T YOU FORKING GO TO...</h1>
               <h1 style="text-align:center;" id="restaurant-name"></h1>
+              <h4 style="text-align:center;" id="restaurant-info"></h4>
               <br/>
               <!-- <div class="row">
                 <div class="col-lg-12">
@@ -117,13 +118,13 @@
               <br/>
               <div class="row">
                 <div class="col-lg-3">
-                  <button class="btn btn-black btn-lg btn-block" onclick="maybe()">MAYBE</button>
+                  <button class="btn btn-black btn-lg btn-block" data-toggle="tooltip" data-placement="left" title="Click to place into your Maybe list" onclick="maybe()">MAYBE</button>
                 </div>
                 <div class="col-lg-6">
                   <button class="btn btn-black btn-lg btn-block" onclick="reject()">NO, FORK THAT</button>
                 </div>
                 <div class="col-lg-3">
-                  <button id="blockplace" class="btn btn-black btn-lg btn-block" onclick="block(this)">BLOCK</button>
+                  <button id="blockplace" class="btn btn-black btn-lg btn-block" data-toggle="tooltip" data-placement="right" title="Click to place into the Block list" onclick="block(this)">BLOCK</button>
                 </div>
               </div>
             </div>
@@ -131,10 +132,10 @@
         </div>
         <div id="blockcol" class="col-lg-3" style="height: 680px;">
           <div class="panel panel-default" style="height: 100%;">
-            <div class="panel-header">
-              <h2 style="text-align:center;">BLOCKED</h2>
+            <div class="panel-header" style="padding-left:2em; padding-right:2em;">
+              <h2>BLOCKED<span class="glyphicon glyphicon-collapse-up" style="float:right;" onclick="toggleblock(this)"></span></h2>
             </div>
-            <div class="panel-body">
+            <div id="blockbody" class="panel-body">
               <ul id = "blocklist" class="list-group" style="max-height:550px;overflow:auto;">
               </ul>
             </div>

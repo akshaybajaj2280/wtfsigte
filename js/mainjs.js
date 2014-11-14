@@ -24,11 +24,12 @@ function displayRestaurant(all_restaurants, index) {
       document.getElementById("finished").style.display = "block";
       return;
     }
-    document.getElementById("main-panel").style.display = "none";
+    document.getElementById("main-panel").style.visibility = "hidden";
     document.getElementById("spinner").style.display = "block";
 
 
     var dest = all_restaurants[index]['name'] + ", " + all_restaurants[index]['location'].display_address.toString();
+
     $.when(priceFilterFunct(all_restaurants[index].url), calcDistancePHP(all_restaurants[index].location.coordinate.latitude, all_restaurants[index].location.coordinate.longitude)).done(function(a1, a2){
 
       // calculate distance
@@ -63,13 +64,22 @@ function displayRestaurant(all_restaurants, index) {
             zoom: 11,
             disableDefaultUI: true
           };
-          $("#restaurant-name").html(all_restaurants[index]['name'].toUpperCase());
+          //$("#restaurant-name").html(all_restaurants[index]['name'].toUpperCase());
+          var url = all_restaurants[index]['url'];
+          var phone = all_restaurants[index]['display_phone'];
+          var address = all_restaurants[index]['location'].display_address.toString();
+          $("#restaurant-name").html('<a href='+ url + '>' +all_restaurants[index]['name'].toUpperCase() + '</a>');
+          $("#restaurant-info").html(phone + ' | ' + address);
+          
+            
           map = new google.maps.Map(document.getElementById('map-canvas'),
               mapOptions);
           directionsDisplay.setMap(map);
 
           document.getElementById("spinner").style.display = "none";
           document.getElementById("main-panel").style.display = "block";
+          document.getElementById("main-panel").style.visibility = "visible";
+    
           // createLegend(myLatlng);
 
       } else {
@@ -355,6 +365,40 @@ function removeFromMaybe(obj){
   var listid = "list" + id;
   var listitem = document.getElementById(listid);
   listitem.parentNode.removeChild(listitem);
+}
+
+function togglemaybe(obj){
+  var classname = obj.className;
+  if (classname == "glyphicon glyphicon-collapse-up"){
+    document.getElementById("maybebody").style.display="none";
+    obj.setAttribute("class", "glyphicon glyphicon-collapse-down");
+    document.getElementById("maybecol").style.height = "";
+  }
+  else if (classname == "glyphicon glyphicon-collapse-down"){
+    document.getElementById("maybebody").style.display="block";
+    obj.setAttribute("class", "glyphicon glyphicon-collapse-up");
+    document.getElementById("maybecol").style.height = "680px";
+  }
+  else{
+    alert("error with getting classname");
+  }
+}
+
+function toggleblock(obj){
+  var classname = obj.className;
+  if (classname == "glyphicon glyphicon-collapse-up"){
+    document.getElementById("blockbody").style.display="none";
+    obj.setAttribute("class", "glyphicon glyphicon-collapse-down");
+    document.getElementById("blockcol").style.height = "";
+  }
+  else if (classname == "glyphicon glyphicon-collapse-down"){
+    document.getElementById("blockbody").style.display="block";
+    obj.setAttribute("class", "glyphicon glyphicon-collapse-up");
+    document.getElementById("blockcol").style.height = "680px";
+  }
+  else{
+    alert("error with getting classname");
+  }
 }
 
 $(document).ready(function() {
