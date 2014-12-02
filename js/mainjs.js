@@ -30,10 +30,14 @@ function displayRestaurant(all_restaurants, index) {
 
     var dest = all_restaurants[index]['name'] + ", " + all_restaurants[index]['location'].display_address.toString();
 
-    $.when(priceFilterFunct(all_restaurants[index].url), calcDistancePHP(all_restaurants[index].location.coordinate.latitude, all_restaurants[index].location.coordinate.longitude)).done(function(a1, a2){
+    $.when(priceFilterFunct(all_restaurants[index].url),  calcDistancePHP(all_restaurants[index].location.coordinate.latitude, all_restaurants[index].location.coordinate.longitude), getHoursPHP(all_restaurants[index].url)).done(function(a1, a2, a3){
 
       // calculate distance
+      console.log(a3[0]);
+      var open = a3[0];
       var price = a1[0];
+      price = price.replace(/(\n[\t ]*){2,}\n/gm , '<br/><br/>')
+      console.log(price);
       var distance = a2[0];
       var type = null;
       if (all_restaurants[index].categories[0] instanceof Array) {
@@ -52,7 +56,7 @@ function displayRestaurant(all_restaurants, index) {
       // filter type
       var typeFound = $.inArray(type.toLowerCase(), typeFilter) > -1;
 
-      if (price.length < priceFilter.length && distance < distFilter && !typeFound) {
+      if (price.length < priceFilter.length && distance < distFilter && !typeFound && "Open now" === open) {
 
           // console.log("ELIGIBLE");
           calcRoute(myLatlng, dest);
@@ -132,6 +136,12 @@ function priceFilterFunct(rest_url) {
 function calcDistancePHP(end_lat, end_long) {
     return $.ajax({
         url: "getDistance.php?origins=" + latitude + "," + longitude + "&end=" + end_lat + "," + end_long
+    });
+}
+
+function getHoursPHP(url) {
+    return $.ajax({
+        url: "hours.php?website=" + url
     });
 }
 
